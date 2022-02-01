@@ -1,0 +1,104 @@
+1. Best time to buy and sell stocks
+
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+ 
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
+
+
+
+
+Solution:
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxProfit =0;
+        int minProfit = Integer.MAX_VALUE;
+        for(int i=0; i< prices.length; i++)
+        {
+            minProfit= Math.min(minProfit, prices[i]);
+            maxProfit= Math.max(maxProfit, prices[i]-minProfit);
+            
+        }
+        
+        return maxProfit;
+        
+    }
+}
+
+
+
+
+2. Build Array from Permutation
+
+Given a zero-based permutation nums (0-indexed), build an array ans of the same length where ans[i] = nums[nums[i]] for each 0 <= i < nums.length and return it.
+
+A zero-based permutation nums is an array of distinct integers from 0 to nums.length - 1 (inclusive).
+
+ 
+
+Example 1:
+
+Input: nums = [0,2,1,5,3,4]
+Output: [0,1,2,4,5,3]
+Explanation: The array ans is built as follows: 
+ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]
+    = [nums[0], nums[2], nums[1], nums[5], nums[3], nums[4]]
+    = [0,1,2,4,5,3]
+Example 2:
+
+Input: nums = [5,0,1,2,3,4]
+Output: [4,5,0,1,2,3]
+Explanation: The array ans is built as follows:
+ans = [nums[nums[0]], nums[nums[1]], nums[nums[2]], nums[nums[3]], nums[nums[4]], nums[nums[5]]]
+    = [nums[5], nums[0], nums[1], nums[2], nums[3], nums[4]]
+    = [4,5,0,1,2,3]
+ 
+
+Constraints:
+
+1 <= nums.length <= 1000
+0 <= nums[i] < nums.length
+The elements in nums are distinct.
+
+
+
+
+
+
+Solution:
+class Solution {
+    public int[] buildArray(int[] nums) {
+        int n= nums.length;
+        
+        for(int i=0; i<n; i++){
+            nums[i]= nums[i]+ n*(nums[nums[i]] % n);            
+        }
+        
+        for(int i=0; i<n; i++){
+            nums[i]= nums[i]/n;
+        }
+        
+        return nums;
+    }
+}
