@@ -1,0 +1,91 @@
+6004. Count Operations to Obtain Zero
+User Accepted:9385
+User Tried:9603
+Total Accepted:9612
+Total Submissions:13137
+Difficulty:Easy
+You are given two non-negative integers num1 and num2.
+
+In one operation, if num1 >= num2, you must subtract num2 from num1, otherwise subtract num1 from num2.
+
+For example, if num1 = 5 and num2 = 4, subtract num2 from num1, thus obtaining num1 = 1 and num2 = 4. However, if num1 = 4 and num2 = 5, after one operation, num1 = 4 and num2 = 1.
+Return the number of operations required to make either num1 = 0 or num2 = 0.
+
+class Solution {
+    public int countOperations(int num1, int num2) {
+        int count =0;
+        
+        if(num1==0 || num2==0)
+            return 0;
+        
+        for(int i=0; num1!=0 || num2!=0; i++)  
+        {
+            if(num1==0 || num2==0)
+                break;
+            
+            if(num1>=num2)
+            {
+                num1= num1-num2;
+                count++;
+            }
+                
+            else
+            {
+                num2= num2-num1;
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
+
+
+
+
+
+6005. Minimum Operations to Make the Array Alternating
+User Accepted:3646
+User Tried:6948
+Total Accepted:3710
+Total Submissions:16654
+Difficulty:Medium
+You are given a 0-indexed array nums consisting of n positive integers.
+
+The array nums is called alternating if:
+
+nums[i - 2] == nums[i], where 2 <= i <= n - 1.
+nums[i - 1] != nums[i], where 1 <= i <= n - 1.
+In one operation, you can choose an index i and change nums[i] into any positive integer.
+
+Return the minimum number of operations required to make the array alternating.
+
+
+sol:
+
+class Solution:
+    def minimumOperations(self, nums: List[int]) -> int:
+        hash1={}
+        for i in range(0, len(nums), 2):
+            if nums[i] in hash1:
+                hash1[nums[i]]+=1
+            else:
+                hash1[nums[i]]=1
+
+        hash2={}
+        for i in range(1, len(nums),2):
+            if nums[i] in hash2: 
+                hash2[nums [i]]+=1
+            else:
+                hash2[nums [i]]=1
+        hashv1=sum(hash1.values()) 
+        hashv2=sum(hash2.values())
+        hashm1=[(k,hash1[k]) for k in hash1.keys()]
+        hashm2=[(k,hash2[k]) for k in hash2.keys()]
+        hashm1=sorted (hashm1, key= lambda x:x[1], reverse=True)
+        hashm2=sorted(hashm2, key= lambda x:x[1], reverse=True)
+        for i in hashm1:
+            for j in hashm2:
+                if i[0]!=j[0]:
+                    return hashv1-i[1] + hashv2-j[1]
+        return min(hashv1, hashv2)
